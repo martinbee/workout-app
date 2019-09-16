@@ -19,17 +19,30 @@ const uiTheme = {
 };
 
 class Test extends React.Component {
+  state = {
+    workouts: [],
+  };
+
   async componentDidMount () {
-    const querySnapshot = await firestore()
-      .collection('users')
-      .get();
-    
-    console.log('Total users', querySnapshot.size);
-    console.log('User Documents', querySnapshot.docs);
+    try {
+      const querySnapshot = await firestore()
+        .collection('workouts')
+        .get();
+
+      this.setState({ workouts: querySnapshot.docs });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   render() {
-    return <View><Text>Test</Text></View>
+    return this.state.workouts.map((workout) => {
+      if (!workout.exists) return null;
+
+      const { exercises } = workout.data();
+
+      return <View key={workout.id}>{exercises.map((id) => <Text key={id}>{id}</Text>)}</View>
+    });
   }
 }
 
