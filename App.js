@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-material-ui';
 import { Navigator, NativeModules } from 'react-native';
-
+import firestore from '@react-native-firebase/firestore';
+ 
 import { COLOR, ThemeContext, getTheme } from 'react-native-material-ui';
 
 // you can set your style right here, it'll be propagated to application
@@ -16,6 +17,22 @@ const uiTheme = {
     },
   },
 };
+
+class Test extends React.Component {
+  async componentDidMount () {
+    const querySnapshot = await firestore()
+      .collection('users')
+      .get();
+    
+    console.log('Total users', querySnapshot.size);
+    console.log('User Documents', querySnapshot.docs);
+  }
+
+  render() {
+    return <View><Text>Test</Text></View>
+  }
+}
+
 const App = () => (
   <View>
     <Button primary text="Primary" /> 
@@ -23,7 +40,7 @@ const App = () => (
     <Button accent text="Accent" /> 
     <Button raised primary text="Primary" />
     <Button disabled text="Disabled" />
-    <Text>Test</Text>
+    <Test />
   </View>
 );
 

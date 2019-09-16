@@ -5,10 +5,13 @@
   "scripts": {
     "start": "react-native start",
     "android:dev": "$ANDROID_HOME/emulator/emulator -avd Nexus_5x_API_28_x86 -netdelay none -netspeed full > /dev/null | react-native run-android",
+    "bundler": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-firebase/app": "^0.4.3",
+    "@react-native-firebase/firestore": "^0.4.3",
     "react": "16.8.6",
     "react-native": "0.60.0",
     "react-native-material-ui": "^1.30.1",

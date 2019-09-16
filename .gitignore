@@ -57,3 +57,9 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+ios-release.bundle
+ios-release.bundle.map
+
+.env
+google-services.json
