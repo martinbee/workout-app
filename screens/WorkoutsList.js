@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import { Button } from 'react-native-material-ui';
 
-const WorkoutButton = ({ navigation, name, usePrimary }) => (
+const WorkoutButton = ({ navigation, workoutId, name, usePrimary }) => (
   <Button 
     raised
     primary={usePrimary} 
-    onPress={() => navigation.navigate('Workout', { workoutName: name })}
+    onPress={() => navigation.navigate('Workout', { workoutId, workoutName: name })}
     text={name} 
   /> 
 );
 
+// is sub necessary?
 export default class WorkoutsList extends Component {
   state = {
     workouts: [],
@@ -53,6 +54,7 @@ export default class WorkoutsList extends Component {
           key={workout.id}
           navigation={this.props.navigation} 
           usePrimary={usePrimary}
+          workoutId={workout.id}
           {...workout.data()}
         />
       );
