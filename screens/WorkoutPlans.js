@@ -9,7 +9,27 @@ import firestore from '@react-native-firebase/firestore';
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-material-ui';
 
-const WorkoutPlans = () => {
+async function generateWorkout(plan) {
+  const { id, name, exerciseIds } = plan;
+  const exerciseDocs = await Promise.all(
+    exerciseIds.map(id => firestore().collection('exercises').doc(id).get())
+  );
+  const exercises = exerciseDocs.reduce((exercises, doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }), {});
+  const newWorkout = {
+    name,
+    workoutPlanId: id,
+    userId: '1',
+    isActive: true,
+    exercises,
+  };
+
+  return firestore().collection('workouts').add(newWorkout);
+}
+
+const WorkoutPlans = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [workoutPlans, setWorkoutPlans] = useState([]);
@@ -21,9 +41,11 @@ const WorkoutPlans = () => {
           .collection('workoutPlans')
           .where('userId', '==', '1')
           .get();
+        const workoutPlans = workoutPlansQuery.docs
+          .map(workout => ({ id: workout.id, ...workout.data() }))
 
         setLoading(false);
-        setWorkoutPlans(workoutPlansQuery.docs);
+        setWorkoutPlans(workoutPlans);
       } catch (e) {
         setLoading(false);
         setError(e);
@@ -36,21 +58,25 @@ const WorkoutPlans = () => {
   if (loading) return <View><Text>Loading</Text></View>;
   if (error) return <View><Text>{error}</Text></View>;
 
-  if (workoutPlans.empty) return <View><Text>Blank State</Text></View>;
+  if (!workoutPlans.length) return <View><Text>Blank State</Text></View>;
 
   return workoutPlans.map((plan, index) => {
-    if (!plan.exists) return null;
-
     const usePrimaryColor = index % 2 === 0;
-    const { name } = plan.data();
+    const { id, name } = plan;
 
     return (
       <Button 
-        key={plan.id}
+        key={id}
         raised
         primary={usePrimaryColor} 
-        onPress={() => console.log(name)}
-        // onPress={() => navigation.navigate('Workout', { workoutId, workoutName: name })} // create workout
+        onPress={async () => {  // probably should debounce here
+          const newWorkout = await generateWorkout(plan);
+
+          navigation.navigate('Workout', { 
+            workoutId: newWorkout.id, 
+            workoutName: name 
+          });
+        }}
         text={name}
       />
     );
