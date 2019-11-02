@@ -17,7 +17,8 @@ const WorkoutPlans = () => {
   useEffect(() => {
     const getWorkoutPlans = async () => {
       try {
-        const workoutPlansQuery = await firestore().collection('workoutPlans')
+        const workoutPlansQuery = await firestore()
+          .collection('workoutPlans')
           .where('userId', '==', '1')
           .get();
 
@@ -45,6 +46,7 @@ const WorkoutPlans = () => {
 
     return (
       <Button 
+        key={plan.id}
         raised
         primary={usePrimaryColor} 
         onPress={() => console.log(name)}
