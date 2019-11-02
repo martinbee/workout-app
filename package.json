@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "android:dev": "$ANDROID_HOME/emulator/emulator -avd Nexus_5x_API_28_x86 -netdelay none -netspeed full > /dev/null | react-native run-android",
+    "android:simulator": "$ANDROID_HOME/emulator/emulator -list-avds | (read simulator; emulator -avd ${simulator} -logcat *:e)",
+    "android:dev": "react-native run-android",
     "bundler": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
     "test": "jest",
     "lint": "eslint ."

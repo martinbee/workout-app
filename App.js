@@ -3,7 +3,7 @@ import { COLOR, ThemeContext, getTheme } from 'react-native-material-ui';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
-import WorkoutsList from '@screens/WorkoutsList';
+import WorkoutPlans from '@screens/WorkoutPlans';
 import Workout from '@screens/Workout';
 
 // you can set your style right here, it'll be propagated to application
@@ -20,9 +20,9 @@ const uiTheme = {
 
 const RootStack = createStackNavigator(
   {
-    WorkoutsList: {
-      screen: WorkoutsList,
-      navigationOptions: ({ navigation }) => ({
+    WorkoutPlans: {
+      screen: WorkoutPlans,
+      navigationOptions: () => ({
         title: 'Choose a Workout',
       }),
     },
@@ -34,7 +34,7 @@ const RootStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'WorkoutsList',
+    initialRouteName: 'WorkoutPlans',
   },
 );
 
