@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card } from 'react-native-material-ui';
 import { View, Text } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import { Button } from 'react-native-material-ui';
 
 import Exercise from '@components/Exercise';
 
@@ -41,6 +42,14 @@ const Workout = ({ navigation }) => {
       {exercisesArray.map(exercise => (
         <Exercise key={exercise.id} exercise={exercise} workoutId={workout.id} />
       ))}
+      <Button 
+        raised
+        onPress={async () => {  // probably should debounce here
+          await firestore().collection('workouts').doc(workout.id).update({ isActive: false })
+          navigation.navigate('WorkoutPlans');
+        }}
+        text="Finish"
+      />
     </Card>
   );
 };
