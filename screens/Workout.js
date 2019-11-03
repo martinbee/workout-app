@@ -46,7 +46,7 @@ const Workout = ({ navigation }) => {
   ));
 
   return (
-    <Card>
+    <Card style={{ padding: 15 }}>
       {renderExercises()}
     </Card>
   );
