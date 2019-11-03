@@ -34,6 +34,28 @@ const WorkoutPlans = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [workoutPlans, setWorkoutPlans] = useState([]);
 
+  // this is a temp hack until I figure out sign in/sign out control logic and move this to that same spot
+  useEffect(() => {
+    const getActiveWorkouts = async () => {
+      const activeWorkoutsQuery = await firestore()
+        .collection('workouts')
+        .where('userId', '==', '1')
+        .where('isActive', '==', true)
+        .get();
+
+      if (!activeWorkoutsQuery.empty) {
+        const activeWorkout = activeWorkoutsQuery.docs[0];
+
+        navigation.navigate('Workout', { 
+          workoutId: activeWorkout.id, 
+          workoutName: activeWorkout.data().name,
+        });
+      }
+    };
+
+    getActiveWorkouts();
+  }, []);
+
   useEffect(() => {
     const getWorkoutPlans = async () => {
       try {

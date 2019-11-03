@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Card } from 'react-native-material-ui';
 import { View, Text } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
@@ -41,8 +42,16 @@ const Workout = ({ navigation }) => {
   } = workout;
 
   return (
-    <View><Text>{name}</Text></View>
+    <View>
+      <Card>
+        <Text>hi</Text>
+      </Card>
+    </View>
   );
 };
 
 export default Workout;
+
+// for each exercise show squares for each set
+// square is empty and not filled in
+// on touch fill, add rep number, and then start a timer
