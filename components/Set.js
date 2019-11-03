@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 
-const Set = ({ targetReps }) => {
+const Set = ({ targetReps, set, completedReps, workoutId }) => {
   const [reps, setReps] = useState(0);
   const [isDone, setIsDone] = useState(false);
   
@@ -17,12 +17,20 @@ const Set = ({ targetReps }) => {
       }
     }
   };
+  const backgroundColor = isDone ? 'green' : 'transparent';
 
   return (
-    <TouchableOpacity onPress={handlePress} style={{ marginRight: 10 }}>
-      <View style={{ width: 50, height: 50, borderWidth: 1, borderColor: 'black'}}>
-        {isDone ? <Text>{reps}</Text> : null}
-      </View>
+    <TouchableOpacity onPress={handlePress} style={{ 
+      marginRight: 10,
+      width: 40, 
+      height: 40, 
+      borderWidth: 1, 
+      borderColor: 'black',
+      backgroundColor,
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      {isDone ? <Text style={{ textAlign: 'center', fontSize: 20 }}>{reps}</Text> : null}
     </TouchableOpacity>
   );
 };

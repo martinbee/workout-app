@@ -3,25 +3,7 @@ import firestore from '@react-native-firebase/firestore';
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-material-ui';
 
-async function generateWorkout({ id, name, exerciseIds }) {
-  const exerciseDocs = await Promise.all(
-    exerciseIds.map(id => firestore().collection('exercises').doc(id).get())
-  );
-  const exercises = exerciseDocs.reduce((exercises, doc) => ({
-    ...exercises,
-    [doc.id]: { ...doc.data() },
-  }), {});
-
-  const newWorkout = {
-    name,
-    workoutPlanId: id,
-    userId: '1',
-    isActive: true,
-    exercises,
-  };
-
-  return firestore().collection('workouts').add(newWorkout);
-}
+import generateWorkout from '@utilities/generateWorkout';
 
 const WorkoutPlans = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
