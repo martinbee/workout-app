@@ -3,6 +3,8 @@ import { Card } from 'react-native-material-ui';
 import { View, Text } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
+import Exercise from '@components/Exercise';
+
 const Workout = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -36,17 +38,17 @@ const Workout = ({ navigation }) => {
 
   if (!workout) return <View><Text>Blank State</Text></View>;
 
-  const {
-    name,
-    exercises,
-  } = workout;
+  const exercisesArray = Object.entries(workout.exercises)
+    .map(([id, exercise]) => ({ id, ...exercise }));
+  
+  const renderExercises = () => exercisesArray.map(exercise => (
+    <Exercise key={exercise.id} exercise={exercise} />
+  ));
 
   return (
-    <View>
-      <Card>
-        <Text>hi</Text>
-      </Card>
-    </View>
+    <Card>
+      {renderExercises()}
+    </Card>
   );
 };
 

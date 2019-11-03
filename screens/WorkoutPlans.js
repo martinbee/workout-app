@@ -1,23 +1,17 @@
-// grab all workout plans (no sub)
-// on click of workout plan, create workout and then route to workout
-// workout: grab workout and then sub to all exercises
-// if modifying weight, update exercise,
-// only on finish of workout do we save weight
-
 import React, { useState, useEffect } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-material-ui';
 
-async function generateWorkout(plan) {
-  const { id, name, exerciseIds } = plan;
+async function generateWorkout({ id, name, exerciseIds }) {
   const exerciseDocs = await Promise.all(
     exerciseIds.map(id => firestore().collection('exercises').doc(id).get())
   );
   const exercises = exerciseDocs.reduce((exercises, doc) => ({
-    id: doc.id,
-    ...doc.data(),
+    ...exercises,
+    [doc.id]: { ...doc.data() },
   }), {});
+
   const newWorkout = {
     name,
     workoutPlanId: id,
