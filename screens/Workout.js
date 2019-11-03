@@ -11,12 +11,10 @@ const Workout = ({ navigation }) => {
   const [workout, setWorkout] = useState(null);
 
   useEffect(() => {
-    const getWorkout = async () => {
-      try {
-        const workoutDoc = await firestore()
-          .collection('workouts')
-          .doc(navigation.getParam('workoutId', ''))
-          .get();
+    firestore()
+      .collection('workouts')
+      .doc(navigation.getParam('workoutId', ''))
+      .onSnapshot((workoutDoc) => {
         const workout = {
           id: workoutDoc.id,
           ...workoutDoc.data(),
@@ -24,13 +22,10 @@ const Workout = ({ navigation }) => {
 
         setLoading(false);
         setWorkout(workout);
-      } catch (e) {
+      }, (e) => {
         setLoading(false);
         setError(e);
-      }
-    };
-
-    getWorkout();
+      });
   }, []);
 
   if (loading) return <View><Text>Loading</Text></View>;

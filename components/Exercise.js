@@ -29,6 +29,7 @@ const Exercise = ({ exercise, workoutId }) => {
             completedReps={completedReps} 
             targetReps={reps} 
             workoutId={workoutId}
+            exerciseId={exercise.id}
           />
         ))}
       </View>

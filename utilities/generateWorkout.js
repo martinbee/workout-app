@@ -10,7 +10,7 @@ export default async function generateWorkout({ exerciseIds, name, id }) {
     const setsMap = {};
 
     for (let i = 0; i < doc.data().sets; i++) {
-      setsMap[i] = null;
+      setsMap[i] = 0;
     }
 
     return {

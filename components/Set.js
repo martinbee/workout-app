@@ -1,23 +1,35 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 
-const Set = ({ targetReps, set, completedReps, workoutId }) => {
-  const [reps, setReps] = useState(0);
-  const [isDone, setIsDone] = useState(false);
-  
-  const handlePress = () => {
-    if (!isDone) {
-      setIsDone(true);
-      setReps(targetReps);
+const Set = ({ 
+  targetReps, 
+  set, 
+  completedReps, 
+  workoutId, 
+  exerciseId,
+}) => {
+  const handlePress = async () => {
+    const setPath = `exercises.${exerciseId}.sets.${set}`;
+
+    if (!completedReps) {
+      await firestore()
+        .collection('workouts')
+        .doc(workoutId)
+        .update({
+          [setPath]: targetReps,
+        });
     } else {
-      if (reps === 1) {
-        setIsDone(false);
-      } else {
-        setReps(reps - 1);
-      }
+      await firestore()
+        .collection('workouts')
+        .doc(workoutId)
+        .update({
+          [setPath]: completedReps - 1,
+        });
     }
   };
-  const backgroundColor = isDone ? 'green' : 'transparent';
+
+  const backgroundColor = completedReps ? 'green' : 'transparent';
 
   return (
     <TouchableOpacity onPress={handlePress} style={{ 
@@ -30,7 +42,7 @@ const Set = ({ targetReps, set, completedReps, workoutId }) => {
       alignItems: 'center',
       justifyContent: 'center',
     }}>
-      {isDone ? <Text style={{ textAlign: 'center', fontSize: 20 }}>{reps}</Text> : null}
+      {completedReps ? <Text style={{ textAlign: 'center', fontSize: 20 }}>{completedReps}</Text> : null}
     </TouchableOpacity>
   );
 };
