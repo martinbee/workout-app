@@ -11,38 +11,37 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   extends: [
+    'airbnb',
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/typescript',
     'prettier',
   ],
+  rules: {
+    'prettier/prettier': ['error'],
+    'react/jsx-filename-extension': [
+      2,
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ],
+    'react/style-prop-object': 0,
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+  },
 };
-
-// module.exports = {
-//   root: true,
-//   parserOptions: {
-//     ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
-//     sourceType: 'module', // Allows for the use of imports
-//     ecmaFeatures: {
-//       jsx: true, // Allows for the parsing of JSX
-//     },
-//   },
-//     react: {
-//       version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
-//     },
-//   },
-//   extends: ['airbnb-typescript-prettier'],
-//   plugins: ['prettier'],
-//   rules: {
-//     'prettier/prettier': ['error'],
-//     'react/jsx-filename-extension': [
-//       2,
-//       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
-//     ],
-//     'react/style-prop-object': 0,
-
-//     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
-//     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
-//   },
-// };
