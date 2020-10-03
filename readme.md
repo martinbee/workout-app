@@ -19,20 +19,20 @@
 
 ## Plan
 - P0
--- ~layout with stub screens~
--- Stub workout templates hardcoded on client
--- workout UI
--- break/rest toast
+  - ~layout with stub screens~
+  - Stub workout templates hardcoded on client
+  - workout UI
+  - break/rest toast
 
 - P1
--- Login
--- User Models
--- Workout Models
--- Template Models with hardcoded sample workouts
+  - Login
+  - User Models
+  - Workout Models
+  - Template Models with hardcoded sample workouts
 
 - p2
--- History
--- User Settings
+  - History
+  - User Settings
 
 - p3
--- Whiteboard/template editor
+  - Whiteboard/template editor
