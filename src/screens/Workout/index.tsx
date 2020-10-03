@@ -1,11 +1,16 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Card, Text } from 'react-native-paper';
+
+import Page from '../../components/Page';
 
 export default function WorkoutScreen(): JSX.Element {
   return (
-    <View>
-      <Text>Workout Screen</Text>
-    </View>
+    <Page>
+      <Card>
+        <Card.Content>
+          <Text>Workout 1</Text>
+        </Card.Content>
+      </Card>
+    </Page>
   );
 }

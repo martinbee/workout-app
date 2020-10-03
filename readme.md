@@ -25,6 +25,7 @@
   - break/rest toast
 
 - P1
+  - Warmups in workout
   - Login
   - User Models
   - Workout Models
@@ -36,3 +37,4 @@
 
 - p3
   - Whiteboard/template editor
+  - Mesos
